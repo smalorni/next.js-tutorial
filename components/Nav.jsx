@@ -14,6 +14,8 @@ const Nav = () => {
     const isUserLoggedIn = true;
 
     const [ providers, setProviders ] = useState(null)
+    //need a state to open up the menu
+    const [ menuDropDown, setMenuDropDown ] = useState(false);
     //
     useEffect(() => {
         //this is an async function
@@ -71,6 +73,61 @@ const Nav = () => {
                 ))}
                 </>
             )}
+        </div>
+
+        {/* Mobile Navigation */}
+        <div className="sm:hidden flex relative">
+            {isUserLoggedIn ? (
+               <div className="flex">
+                    <Image src="/assets/images/logo.svg" 
+                        alt="profile" 
+                        width={37} 
+                        height={37}
+                        className="rounded-full"
+                        // triggers the state for the menu to drop down in mobile view
+                        onClick={() => setMenuDropDown(!menuDropDown)}
+                        />
+                    {/* If the menuDropDown state is true, it will show the menu */}
+                    {menuDropDown && (
+                        <div className="dropdown">
+                            <Link href="/profile"
+                            className="dropdown_link"
+                            onClick={() => setMenuDropDown(false)}
+                            > 
+                            My profile
+                            </Link>
+
+                            <Link href="/create-prompt"
+                            className="dropdown_link"
+                            onClick={() => setMenuDropDown(false)}
+                            > 
+                            Create Prompt
+                            </Link>
+                            <button 
+                                type="button" 
+                                onClick={() => {
+                                    setMenuDropDown(false);
+                                    signOut();
+                                }}
+                                className="mt-5 w-full black_btn"
+                                >
+                                Sign Out
+                            </button>
+                        </div>
+                    )}
+               </div>
+            ) : (
+                <>
+                {providers && Object.values(providers).map((provider) => (
+                    <button type="button"
+                    key={provider.name}
+                    onClick={() => signIn(provider.id)}
+                    className="black_btn">
+                        Sign In
+                    </button>
+                ))}
+                </>
+            )})
         </div>
     </nav>
   )
