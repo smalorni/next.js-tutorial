@@ -1,6 +1,9 @@
 //set up our google auth provider
-import NextAuth from "next-auth/next";
+import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+
+import User from '@models/user';
+import { connectToDB } from '@utils/database';
 import { signIn } from "next-auth/react";
 
 const handler = NextAuth({
@@ -16,15 +19,12 @@ const handler = NextAuth({
     },
 
     async signIn({ profile }) {
+      try {
+        //serverless route - it only run when it is called
+      }
     }
     })
 
     //this is how Next does it
-    // export default { handler as GET, handler as POST};
-    export default function handler(req, res) {
-        if (req.method === 'POST') {
-          // Process a POST request
-        } else {
-          // Handle any other HTTP method
-        }
-      }
+    export default { handler as GET, handler as POST};
+
