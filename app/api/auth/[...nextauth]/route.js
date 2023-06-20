@@ -1,6 +1,7 @@
 //set up our google auth provider
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import { connectToDB } from "@utils/database";
 
 import User from '@models/user';
 import { connectToDB } from '@utils/database';
@@ -21,6 +22,15 @@ const handler = NextAuth({
     async signIn({ profile }) {
       try {
         //serverless route - it only run when it is called
+        await connectToDB();
+
+        //check if user exists
+
+        //if not, create user
+        return true;
+      } catch (error) {
+        console.log(error);
+        return false;
       }
     }
     })

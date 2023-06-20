@@ -15,7 +15,7 @@ export const connectToDatabase = async () => {
     }
     //if we are not connected, connect to database
     try {
-        //connect to database
+        //connect to database - MongoDB Atlas which is a cloud database service
         await mongoose.connect(process.env.MONGODB_URI, {
             //these are the options to avoid console warnings
             dbName: "share_prompt",
